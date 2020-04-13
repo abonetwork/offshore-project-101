@@ -42,7 +42,14 @@
           </div>
           <div class="q-pa-xs col-4 col-sm-2">
             <div class="col-sm-9 col-12 text-subtitle1">Date</div>
-            <q-input outlined v-model="date" type="date" :dense="dense" >
+            <q-input outlined v-model="date" :dense="dense" mask="date" >
+              <template v-slot:append>
+                <q-icon name="event" class="cursor-pointer">
+                  <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+                    <q-date v-model="date" @input="() => $refs.qDateProxy.hide()" />
+                  </q-popup-proxy>
+                </q-icon>
+              </template>
             </q-input>
           </div>
           <div class="q-pa-xs col-4 col-md-1">
@@ -116,14 +123,9 @@
           </div>
         </div>
         <div class="row items-end">
-          <div class="q-pa-xs col-4 col-md-2">
-            <div class="col-sm-9 col-12 text-subtitle1">Dev. language(1)</div><q-input outlined v-model="text" :dense="dense" label="" />
-          </div>
-          <div class="q-pa-xs col-4 col-md-2">
-            <div class="col-sm-9 col-12 text-subtitle1">Dev. language(2)</div><q-input outlined v-model="text" :dense="dense" label="" />
-          </div>
-          <div class="q-pa-xs col-4 col-md-2">
-            <div class="col-sm-9 col-12 text-subtitle1">Dev. language(3)</div><q-input outlined v-model="text" :dense="dense" label="" />
+          <div class="q-pa-xs col-4 col-md-4">
+            <div class="col-sm-9 col-12 text-subtitle1">Dev. language</div>
+            <q-select outlined v-model="modelDevLang" multiple :options="optionsDevLang" :dense="dense" max-values="3" hide-hint="true"/>
           </div>
           <div class="q-pa-xs col-4 col-md-1">
             <div class="col-sm-9 col-12 text-subtitle1">Main OS</div><q-input outlined v-model="text" :dense="dense" label="" />
@@ -155,7 +157,9 @@ export default {
       modelPhase: null,
       modelPhaseStart: null,
       modelPhaseFin: null,
+      modelDevLang: null,
       optionsPhase: ['RD', 'UI', 'SS', 'PS', 'PG', 'PT', 'IT', 'ST', 'OT', 'OM'],
+      optionsDevLang: ['Assembler', 'COBOL', 'PL/I', 'Pro*C', 'C++', 'C', 'VB', 'Excel(VBA)', 'InputMan', 'PL/SQL', 'ABAP', 'C# ', 'Visual Basic .NET', 'Java', 'Perl', 'Shell Script', 'Delphi', 'HTML', 'XML', 'Ruby', 'PHP', 'Other languages'],
       date: '',
       dense: true
     }
